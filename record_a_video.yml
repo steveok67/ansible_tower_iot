@@ -1,0 +1,17 @@
+- hosts: pi_with_camera
+  remote_user: pi
+  tasks:
+   - name: Delete old mp4  files
+     file:
+       path: /home/pi/pi_video.mp4
+       state: absent
+   - name: record a video in h264
+     shell: /usr/bin/raspivid -o pi_video.h264
+   - name: convert it to .mp4
+     shell: /usr/bin/MP4Box -add pi_video.h264 pi_video.mp4
+   - name: Delete the .h264 file
+     file:
+       path: /home/pi/pi_video.h264
+       state: absent
+   - name: copy the .mp4 to the Tower VM
+     shell: /usr/bin/scp ./pi_video.mp4 rhuser@192.168.86.36:/home/rhuser/Desktop/  

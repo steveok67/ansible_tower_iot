@@ -1,0 +1,11 @@
+- hosts: pi_with_camera
+  remote_user: pi
+  tasks:
+   - name: Delete old picture files
+     file:
+       path: /home/pi/pi_photo.jpg
+       state: absent
+   - name: take a picture
+     shell: /usr/bin/raspistill -o pi_photo.jpg
+   - name: get the picture
+     shell: /usr/bin/scp ./pi_photo.jpg rhuser@192.168.86.36:/home/rhuser/Desktop/  

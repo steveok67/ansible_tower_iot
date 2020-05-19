@@ -1,0 +1,5 @@
+- hosts: pi_with_camera
+  remote_user: root
+  tasks:
+   - name: reboot p2
+     reboot:
